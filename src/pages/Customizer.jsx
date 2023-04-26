@@ -53,13 +53,13 @@ const Customizer = () => {
   const handleSubmit = async (type) => {
     if (!prompt) return alert("Please enter a prompt");
     // '/.netlify/functions/generate-ai-photo'
-    const URL = "/.netlify/functions/generate-ai-photo";
+    const URL = import.meta.env.MODE !== "production" ? "/" : import.meta.env.BASE_URL;
 
     try {
       //call backend api for generating image
       setGeneratingImg(true);
 
-      const response = await fetch(URL, {
+      const response = await fetch(`${URL}.netlify/functions/generate-ai-photo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
