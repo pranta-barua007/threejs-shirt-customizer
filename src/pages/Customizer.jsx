@@ -53,7 +53,7 @@ const Customizer = () => {
   const handleSubmit = async (type) => {
     if (!prompt) return alert("Please enter a prompt");
     // '/.netlify/functions/generate-ai-photo'
-    const URL = import.meta.env.DEV ? "/" : "https://pbcustom.netlify.app/";
+    const URL = import.meta.env.DEV ? "/" : import.meta.env.VITE_API_URL;
 
     try {
       //call backend api for generating image
