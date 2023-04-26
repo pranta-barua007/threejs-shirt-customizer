@@ -2,7 +2,7 @@ import { atomWithProxy } from 'jotai-valtio'
 import { proxy } from 'valtio/vanilla'
 
 const proxyState = proxy({
-    intro: true,
+    intro: false,
     color: '#EFBD48',
     isLogoTexture: true,
     isFullTexture: false,
