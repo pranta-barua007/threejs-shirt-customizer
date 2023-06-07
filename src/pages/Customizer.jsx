@@ -53,11 +53,14 @@ const Customizer = () => {
   const handleSubmit = async (type) => {
     if (!prompt) return alert("Please enter a prompt");
     // '/.netlify/functions/generate-ai-photo'
-    const URL = import.meta.env.DEV ? "/" : import.meta.env.VITE_API_URL;
+    const URL = import.meta.env.VITE_API_URL;
 
     try {
       //call backend api for generating image
       setGeneratingImg(true);
+
+
+      // `${URL}.netlify/functions/generate-ai-photo`
 
       const response = await fetch(`${URL}.netlify/functions/generate-ai-photo`, {
         method: "POST",
@@ -71,8 +74,13 @@ const Customizer = () => {
 
       const data = await response.json();
 
-      handleDecals(type, `data:image/png;base64,${data.photo}`);
+      if(!data.photo) {
+        throw new Error('AI is not availabe at the moment')
+      }
+
+      data.photo && handleDecals(type, `data:image/png;base64,${data.photo}`);
     } catch (err) {
+      console.error(err)
       alert(err);
     } finally {
       setGeneratingImg(false);
